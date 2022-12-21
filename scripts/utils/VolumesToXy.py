@@ -18,7 +18,7 @@ from scipy import ndimage as nd
 sys.path.append('../')
 import pyramids_3d as pyr
 import HelpFunctions as HLP
-
+import SimpleITK as sitk
 
 def apply_filters(param, dictionary):
     """
@@ -35,7 +35,10 @@ def apply_filters(param, dictionary):
         start_reading_volume_time = time.time()
         if paths2volumes[v_index][-3:] == 'raw':  # if the volume is in a raw format
             mask = np.empty(param.dim[v_index], np.bool_)
-            mask.data[:] = open(paths2masks[v_index]).read()
+            #mask.data[:] = open(paths2masks[v_index]).read()
+            mhd_path = paths2masks[v_index].replace('.raw','.mhd')
+            img_obj = sitk.ReadImage(mhd_path)
+            mask = sitk.GetArrayFromImage(img_obj)
             raw_volume = HLP.ReadVolume(param.sliceDim, param.sliceNum[v_index], param.paths2volumes[v_index])
         elif paths2volumes[v_index][-3:] == 'npy':  # else, if its in npy format
             inputFile_V = paths2volumes[v_index]  # open(paths2volumes[v_index], 'rb')

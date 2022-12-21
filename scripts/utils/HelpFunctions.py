@@ -129,9 +129,11 @@ def ExtractCube_3d(volume, point, cubeShape):
     shift_x = cubeShape[0]/2
     shift_y = cubeShape[1]/2
     shift_z = cubeShape[2]/2
-    Cube = volume[x-shift_x-1:x+shift_x,
-                  y-shift_y-1:y+shift_y,
-                  z-shift_z-1:z+shift_z]
+    xs,xe,ys,ye,zs,ze = \
+        int(x-shift_x),int(x+shift_x),\
+        int(y-shift_y),int(y+shift_y),\
+        int(z-shift_z),int(z+shift_z)
+    Cube = volume[xs:xe,ys:ye,zs:ze]
     return Cube
     
 #TBD: check the annotation
@@ -155,4 +157,4 @@ def RearangePoinAnnotation(point,PaddZAxis=0,PaddYAxis=0,PaddXAxis=0):
 
 def CenterPoint(volume):
     x,y,z=np.shape(volume)
-    return volume[x/2,y/2,z/2]
+    return volume[int(x/2),int(y/2),int(z/2)]

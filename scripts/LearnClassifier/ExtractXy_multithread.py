@@ -24,8 +24,9 @@ def apply_feature_maps(param, p):
     # Read dictionary
     input_file = open(param.path2dicts+param.dictionaryName+'.pkl', 'rb')
     dictionary = pickle.load(input_file)  # load the dictionary
-    l = len(dictionary)/d
-    dictionary = dictionary[p*l:(p+1)*l]  # consider only the d-th number of atoms
+    l = int(len(dictionary)/d)
+    s,e = int(p*l),int((p+1)*l)
+    dictionary = dictionary[s:e]  # consider only the d-th number of atoms
     input_file.close()
     # Apply filters
     XX, yy = apply_filters(param, dictionary)
