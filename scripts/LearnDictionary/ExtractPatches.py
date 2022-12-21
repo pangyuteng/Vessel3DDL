@@ -72,7 +72,7 @@ def serialize_patches(patches, file_name, path2save):
     output = open(f2save, 'wb')
     np.save(output, patches, allow_pickle=True, fix_imports=True)
     output.close()
-    print "saved to: "+f2save
+    print("saved to: "+f2save)
     return None
 
 

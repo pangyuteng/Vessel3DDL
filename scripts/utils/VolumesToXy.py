@@ -130,7 +130,7 @@ def apply_filters(param, dictionary):
                 yy.append(y)
     end_time = time.time()
     print ("Total time:")
-    print str(end_time-start_time)
+    print(str(end_time-start_time))
     return XX, yy
 
 
