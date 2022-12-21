@@ -3,6 +3,7 @@ import pyqtgraph as pg
 import sys
 sys.path.append('./')
 import time
+import SimpleITK as sitk
 
 # some help functions
 def ReadVolumes(SliceDim,SliceNum, paths):
@@ -24,7 +25,10 @@ def ReadVolume(SliceDim,SliceNum, path):
     z,x,y = SliceNum, SliceDim[0], SliceDim[1]
     volume2read = np.empty((z,x,y), np.int16)
     int16 = 2**19
-    volume2read.data[0: (SliceNum) *int16] = open(path).read()
+    #volume2read.data[0: (SliceNum) *int16] = open(path).read()
+    mhd_path = path.replace('.raw','.mhd')
+    img_obj = sitk.ReadImage(mhd_path)
+    volume2read = sitk.GetArrayFromImage(img_obj)
     return volume2read
 
 def MAP_TO_255_float(rI):

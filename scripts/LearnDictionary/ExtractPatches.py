@@ -18,7 +18,7 @@ sys.path.append('../utils')
 import patches_3d as p
 import pyramids_3d as pyr
 import HelpFunctions as HLP
-
+import SimpleITK as sitk
 
 def extract_patches(param, numofpatches=100000):
     # Extract patches from each volume and scale
@@ -31,7 +31,10 @@ def extract_patches(param, numofpatches=100000):
         if param.paths2volumes_unannotated[v_index][-3:] == 'raw':
             print('raw')
             mask = np.empty((param.patchSliceNum[v_index], param.sliceDim[0], param.sliceDim[1]), np.bool_)
-            mask.data[:] = open(param.paths2masks_unannotated[v_index]).read()
+            #mask.data[:] = open(param.paths2masks_unannotated[v_index]).read()
+            mhd_path = param.paths2masks_unannotated[v_index].replace('.raw','.mhd')
+            img_obj = sitk.ReadImage(mhd_path)
+            mask = sitk.GetArrayFromImage(img_obj)
             raw_volume = HLP.ReadVolume(param.sliceDim, param.patchSliceNum[v_index],
                                         param.paths2volumes_unannotated[v_index])
         elif param.paths2volumes_unannotated[v_index][-3:] == 'pkl':

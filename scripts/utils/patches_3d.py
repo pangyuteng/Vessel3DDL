@@ -132,7 +132,7 @@ def _compute_n_patches_3d(i_x, i_y, i_z, p_x, p_y, p_z, max_patches=None):
     n_y = i_y - p_y + 1
     n_z = i_z - p_z + 1
     all_patches = n_x * n_y * n_z
-
+    max_patches = int(max_patches)
     if max_patches:
         if (isinstance(max_patches, (numbers.Integral))
                 and max_patches < all_patches):
@@ -393,9 +393,12 @@ def extract_patches_3d_fromMask(volume, mask, patch_size, max_patches=None, rand
 
     n_patches = _compute_n_patches_3d(v_x, v_y, v_z, p_x, p_y, p_z, max_patches)
     # check the indexes where mask is True
-    M=np.array(np.where(mask[p_x/2:v_x-p_x/2,
-                             p_y/2:v_y-p_y/2,
-                             p_z/2:v_z-p_z/2]==True)).T
+    xs,xe = round(p_x/2),round(v_x-p_x/2)
+    ys,ye = round(p_y/2),round(v_y-p_y/2)
+    zs,ze = round(p_z/2),round(v_z-p_z/2)
+    M=np.array(np.where(mask[xs:xe,
+                             ys:ye,
+                             zs:ze]==True)).T
     if max_patches:
         rng = check_random_state(random_state)
         indx = rng.randint(len(M), size=n_patches)
