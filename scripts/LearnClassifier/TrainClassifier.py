@@ -7,7 +7,7 @@ Created on Wed Mar 23 13:15:02 2016
 
 import numpy as np
 import sys
-from sklearn.externals import joblib
+import joblib
 from sklearn.utils import shuffle
 sys.path.append('../')
 sys.path.append('../utils')

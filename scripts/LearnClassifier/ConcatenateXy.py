@@ -17,7 +17,7 @@ from VolumesToXy import serialize_xy
 def read_temp_xy(path2xy, nmbrOfThreads, preffix):
     ArrayOf_Xtemp=[]
     ArrayOf_ytemp=[]
-    for i in xrange(nmbrOfThreads):
+    for i in range(nmbrOfThreads):
         XfileName = preffix+'_X_'+str(i)+'.pkl' # +'_i.pkl'
         yfileName = preffix+'_y_'+str(i)+'.pkl' # +'_i.pkl'
         inputFile = open(path2xy+XfileName,'rb')
@@ -45,10 +45,10 @@ def get_y(ytemp,nmbrOfScalesApplied,nmbrOfVolumes):
     """
     
     ytempArray=[] 
-    for i in xrange(nmbrOfVolumes):
+    for i in range(nmbrOfVolumes):
         ytempArray.append(ytemp[0][i*nmbrOfScalesApplied])
     y = ytempArray[0]  # initialize y with 0
-    for i in xrange(len(ytempArray)-1):
+    for i in range(len(ytempArray)-1):
         y = np.concatenate((y,ytempArray[i+1]),axis=0)
     return y
 
@@ -86,22 +86,22 @@ def get_X(Xtemp,nmbrOfScalesApplied,nmbrOfVolumes,nmbrOfScales4Classifier, nmbrO
     """
     
     XtempArray = [] #first part
-    for i in xrange(nmbrOfVolumes*nmbrOfScalesApplied):
+    for i in range(nmbrOfVolumes*nmbrOfScalesApplied):
         Xcon = Xtemp[0][i] # initialize with 0
-        for j in xrange(nmbrOfThreads-1):
+        for j in range(nmbrOfThreads-1):
             Xcon = np.concatenate((Xcon,Xtemp[j+1][ i]),axis=1)
         XtempArray.append(Xcon)
     
     XtempArray_volume = [] #second part
-    for i in xrange(nmbrOfVolumes):
+    for i in range(nmbrOfVolumes):
         Xcon = XtempArray[i*nmbrOfScalesApplied] # initialize with 0
-        for j in xrange(nmbrOfScales4Classifier-1):
+        for j in range(nmbrOfScales4Classifier-1):
             Xcon = np.concatenate((Xcon,XtempArray[i*nmbrOfScalesApplied+1+j]),axis=1)
         XtempArray_volume.append(Xcon)
     
     #third part
     X = XtempArray_volume[0] # initialize with 0
-    for i in xrange(nmbrOfVolumes-1):
+    for i in range(nmbrOfVolumes-1):
         X = np.concatenate((X,XtempArray_volume[i+1]),axis=0)
     return X
 
