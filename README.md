@@ -36,6 +36,18 @@ The entire processing pipeline for the VESSEL12 data is set up in the config.py 
 * Some additional functionality: 3d patch extraction, 3d Gaussian pyramids, loading/saving data.
 The dictionaries and classifier weights are serialized in the ./Data/Serialized directory.
 
+### (optional) Build a container
+* build container.
+```
+docker build -t vessel3ddl docker
+```
+* specify variable `VESSEL12_DIR` and head into container.
+```
+export VESSEL12_DIR=xxx
+docker run -it -w /workdir -v $PWD:/workdir \
+    -v $VESSEL12_DIR:/workdir/Data/VESSEL12 vessel3ddl bash
+```
+
 ### LearnDictionary
 Execute the scripts in following order: <br />
 1. ExtractPatches.py <br />

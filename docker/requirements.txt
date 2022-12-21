@@ -12,4 +12,4 @@ tensorboard_plugin_profile==2.8.0
 tqdm==4.64.0
 sagemaker-training==4.1.0
 pyqtgraph==0.13.1
-PyQt5
+PyQt5==5.15.7
