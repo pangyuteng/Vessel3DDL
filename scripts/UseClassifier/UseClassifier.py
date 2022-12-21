@@ -10,7 +10,7 @@ It is hardcoded for VESSEL12 data.
 
 import pickle
 import sys
-from sklearn.externals import joblib
+import joblib
 import numpy as np
 from scipy import ndimage as nd
 import scipy
@@ -41,6 +41,9 @@ def LoadDictionary(Dpath,Dname):
     return D
 
 def ExtractPatch(volume, xdim, ydim, zdim):
+    xdim = np.array(xdim).astype(np.int)
+    ydim = np.array(ydim).astype(np.int)
+    zdim = np.array(zdim).astype(np.int)
     Cube = volume[xdim[0]:xdim[1],
                   ydim[0]:ydim[1],
                   zdim[0]:zdim[1]]
@@ -48,12 +51,12 @@ def ExtractPatch(volume, xdim, ydim, zdim):
 
 def ApplyAtoms(V,D,scale):
     out=[]
-    for s in xrange(scale):
+    for s in range(scale):
         if s!=0:
             print('scale='+str(s))
             V = pyr.pyramid_reduce_3d(V,downscale=2) # reduce the volume. e.g. from 512^3 to 256^3
         else: print('scale=0')
-        for i in xrange(len(D)):
+        for i in range(len(D)):
             print('s:'+str(s)+' i:'+str(i))
             conv = nd.convolve(V, D[i], mode='constant', cval=0.0)
             if s==0:
@@ -80,7 +83,7 @@ def Divide(L,n,w):
     R=k*w
     Lv=[] # left value
     Rv=[] #right value
-    for i in xrange(k):
+    for i in range(int(k)):
         Lv.append(i*(n-w))
         Rv.append(i*(n-w)+n+w)
     Lv.append(L-R)
@@ -91,9 +94,9 @@ def divideIntoBlocks(V,Lv,Rv):
     # works only for 3d V
     NV = []
     L = len(Lv)
-    for i in xrange(L):
-        for j in xrange(L):
-            for k in xrange(L):
+    for i in range(L):
+        for j in range(L):
+            for k in range(L):
                 xdim=[Lv[i],Rv[i]] 
                 ydim=[Lv[j],Rv[j]]
                 zdim=[Lv[k],Rv[k]]
@@ -107,12 +110,12 @@ def connectAllBlocks(DV,dim,w):
     buff_x=[]
     buff_y=[]
     buff_z=[]
-    for i in xrange(L):
-        for j in xrange(L):
+    for i in range(L):
+        for j in range(L):
             index = i*Lsqr+j*L
             print(index)
             buff_x = DV[index]
-            for k in xrange(L-1):                 
+            for k in range(L-1):                 
                 index = i*Lsqr+j*L+k+1
                 print(index)
                 nextV=DV[index]
@@ -182,7 +185,7 @@ def main():
     # P = P.astype('float32')
     # Next, connect everything back.
     Out = []
-    for i in xrange(len(NV)):
+    for i in range(len(NV)):
         P=NV[i]
         P=P.astype('float32')
         O=ApplyAtoms(P,D,scale)

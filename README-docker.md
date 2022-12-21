@@ -7,11 +7,15 @@ docker run -it -w /workdir -v $PWD:/workdir \
 
 Follow README.md to train classifier
 
-cd scripts/LearnDictionary
+cd /workdir/scripts/LearnDictionary
 python ExtractPatches.py
 python LearnDictionary.py
-cd scripts/LearnClassifier
+
+cd /workdir/scripts/LearnClassifier
 python ExtractXy_multithread.py
 python ConcatenateXy.py
+python TrainClassifier.py
 
+cd /workdir/scripts/UseClassifier
+python UseClassifier.py
 ```
