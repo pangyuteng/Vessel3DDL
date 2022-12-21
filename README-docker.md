@@ -5,7 +5,8 @@ export VESSEL12_DIR=xxx
 docker run -it -w /workdir -v $PWD:/workdir \
     -v $VESSEL12_DIR:/workdir/Data/VESSEL12 vessel3ddl bash
 
-cd scripts/LearnDictionary/
+cd scripts/LearnDictionary
 python ExtractPatches.py
+python LearnDictionary.py
 
 ```
