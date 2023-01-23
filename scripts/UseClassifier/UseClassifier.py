@@ -152,7 +152,9 @@ def Padd(V):
     shp = np.shape(V)
     if shp[0]!=512:
         PaddedVolume = np.lib.pad(V, np.array([[26,27],[0,0],[0,0]]), 'edge')
-    return PaddedVolume
+        return PaddedVolume
+    else:
+        return V
 
 def SerializeOutput(Output,path2save,file_name):
     outputFile = open(path2save+file_name+".npy", 'wb')
