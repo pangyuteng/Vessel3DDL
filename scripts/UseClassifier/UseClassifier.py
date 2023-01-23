@@ -115,7 +115,7 @@ def connectAllBlocks(DV,dim,w):
             index = i*Lsqr+j*L
             print(index)
             buff_x = DV[index]
-            for k in range(L-1):                 
+            for k in range(L-1):
                 index = i*Lsqr+j*L+k+1
                 print(index)
                 nextV=DV[index]
