@@ -1,5 +1,4 @@
-#FROM tensorflow/tensorflow:2.9.1-gpu-jupyter
-FROM python:3.8.16-slim-bullseye
+FROM tensorflow/tensorflow:2.9.1
 
 RUN apt-get update && \
     apt-get install ffmpeg libsm6 libxext6  -y
